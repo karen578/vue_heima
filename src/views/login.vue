@@ -46,7 +46,11 @@ export default {
             .then(res => {
               console.log(res)
               if (res.data.meta.status === 200) {
-                this.$router.push({ name: 'index' })
+                // 登录成功之后将token值进行本地存储,为了方便登录的状态保持
+                localStorage.setItem('itcast_massages_token', res.data.data.token)
+
+                // 登录成功之后进行编程式跳转
+                this.$router.push({ name: 'home' })
               } else {
                 this.$message({
                   message: res.data.meta.msg,
