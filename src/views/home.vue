@@ -14,23 +14,15 @@
       :collapse="iscollapse"
       :router="true"
     :unique-opened='true'>
-      <el-submenu index="1">
+    <!-- 左侧栏菜单需要动态生成，所以需要进行循环， index的值是一个字符串所以需要加上引号 -->
+      <el-submenu :index="frist.id+''" v-for="frist in menusData" :key="frist.id">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span>用户管理</span>
+          <span>{{frist.authName}}</span>
         </template>
-        <el-menu-item index="/home/users">
+        <el-menu-item :index="'/home/'+second.path" v-for="second in frist.children" :key="second.id">
             <i class="el-icon-menu"></i>
-            用户列表</el-menu-item>
-      </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>权限管理</span>
-        </template>
-        <el-menu-item index="1-3">
-            <i class="el-icon-menu"></i>
-            角色列表</el-menu-item>
+           {{second.authName}}</el-menu-item>
       </el-submenu>
     </el-menu>
   </el-aside>
@@ -49,12 +41,26 @@
     </div>
 </template>
 <script>
+import { leftmenus } from '@/api/right_index.js'
 export default {
   data () {
     return {
       // 是否合上的默认值为false
-      iscollapse: false
+      iscollapse: false,
+      menusData: []
     }
+  },
+  mounted () {
+    leftmenus()
+      .then(res => {
+        console.log(res)
+        if (res.data.meta.status === 200) {
+          this.menusData = res.data.data
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>

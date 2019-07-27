@@ -15,3 +15,45 @@ export const getAllUserList = (params) => {
     params
   })
 }
+export const addUser = (data) => {
+  return axios({
+    url: '/users',
+    method: 'post',
+    data
+  })
+}
+// 编辑用户
+export const editUser = (data) => {
+  return axios({
+    url: `users/${data.id}`,
+    method: 'put',
+    data: {
+      email: data.email,
+      mobile: data.mobile
+    }
+  })
+}
+// 删除用户
+export const delUser = (id) => {
+  return axios({
+    url: `users/${id}`,
+    method: 'delete'
+  })
+}
+// 修改用户状态
+export const UpdateUserState = (uid, type) => {
+  return axios({
+    url: `users/${uid}/state/${type}`,
+    method: 'put'
+  })
+}
+// 分配角色
+export const updateRole = (data) => {
+  return axios({
+    url: `users/${data.id}/role`,
+    method: 'put',
+    data: {
+      rid: data.rid
+    }
+  })
+}

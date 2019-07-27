@@ -6,6 +6,11 @@ import Login from '@/views/login.vue'
 import Home from '@/views/home.vue'
 import Welcome from '@/views/welcome.vue'
 import Users from '@/views/users/users.vue'
+import Rights from '@/views/right/rights.vue'
+import Roles from '@/views/right/roles.vue'
+import Goods from '@/views/goods/goods.vue'
+import Add from '@/views/goods/add.vue'
+import List from '@/views/goods/list.vue'
 
 Vue.use(VueRouter)
 
@@ -40,8 +45,34 @@ var router = new VueRouter(
             name: 'users',
             path: 'users',
             component: Users
+          },
+          {
+            name: 'rights',
+            path: 'rights',
+            component: Rights
+          },
+          {
+            name: 'roles',
+            path: 'roles',
+            component: Roles
+          },
+          {
+            name: 'goods',
+            path: 'goods',
+            component: Goods,
+            redirect: { name: 'list' },
+            children: [
+              {
+                name: 'add',
+                path: 'add',
+                component: Add
+              }, {
+                name: 'list',
+                path: 'list',
+                component: List
+              }
+            ]
           }
-
         ]
       }]
   })
